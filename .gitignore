@@ -1,2 +1,5 @@
 pyenv
 activate
+.env
+.project
+.pydevproject
