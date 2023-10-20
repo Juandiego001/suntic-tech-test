@@ -1,6 +1,7 @@
 from datetime import datetime
 from dotenv import load_dotenv
 from apiflask import APIFlask, Schema, abort, fields
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
@@ -9,6 +10,7 @@ import os
 load_dotenv()
 
 app = APIFlask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 db: SQLAlchemy = SQLAlchemy(app)
 
@@ -45,8 +47,10 @@ class Information(db.Model):
 migrate: Migrate = Migrate(app, db)
 
 @app.get('/')
-def test():
-    return {'message': 'Hello World'}
+@app.output(Files)
+def get_files_info():
+    print('LLEGO AQUI')
+    return {'items': [FileOut().dump(info) for info in Information.query.all()]}
 
 @app.post('/')
 @app.input(TheFile, location='files')
