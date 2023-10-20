@@ -1,0 +1,6 @@
+pyenv
+activate
+.env
+.project
+.pydevproject
+__pycache__

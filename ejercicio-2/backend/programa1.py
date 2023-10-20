@@ -1,5 +1,7 @@
+from datetime import datetime
 from dotenv import load_dotenv
-from apiflask import APIFlask, Schema, fields
+from apiflask import APIFlask, Schema, abort, fields
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import os
@@ -7,53 +9,72 @@ import os
 load_dotenv()
 
 app = APIFlask(__name__)
-app['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI')
 db: SQLAlchemy = SQLAlchemy(app)
 
 # Esquemas
-class FileIn(Schema):
-    nombrearchivo = fields.String(150)
-    cantlineas = fields.Int()
-    cantpalabras = fields.Int()
-    cantcaracteres = fields.Int()
-    fecharegistro = fields.String()
-
 class FileOut(Schema):
-    codigo = fields.Int()
-    nombrearchivo = fields.String(150)
-    cantlineas = fields.Int()
-    cantpalabras = fields.Int()
-    cantcaracteres = fields.Int()
+    codigo = fields.Integer()
+    nombrearchivo = fields.String()
+    cantlineas = fields.Integer()
+    cantpalabras = fields.Integer()
+    cantcaracteres = fields.Integer()
     fecharegistro = fields.String()
 
-class File(Schema):
+class Files(Schema):
+    items = fields.List(fields.Nested(FileOut))
+
+class TheFile(Schema):
     file = fields.File()
 
 class Message(Schema):
     message = fields.String()
 
 # Modelos
-class File(db.Model):
-    codigo = db.Integer(nullable=False, primary_key=True)
-    nombrearchivo = db.String(150, nullable=False)
-    cantlineas = db.Integer(nullable=False)
-    cantpalabras = db.Integer(nullable=False)
-    cantcaracteres = db.Integer(nullable=False)
-    fecharegistro = db.Date(nullable=False)
+class Information(db.Model):
+    __tablename__ = 'informacion'
 
+    codigo = db.Column(db.Integer(), nullable=False, primary_key=True,
+                       autoincrement=True)
+    nombrearchivo = db.Column(db.String(250), nullable=False)
+    cantlineas = db.Column(db.Integer(), nullable=False)
+    cantpalabras = db.Column(db.Integer(), nullable=False)
+    cantcaracteres = db.Column(db.Integer(), nullable=False)
+    fecharegistro = db.Column(db.Date(), nullable=False)
+
+migrate: Migrate = Migrate(app, db)
 
 @app.get('/')
 def test():
     return {'message': 'Hello World'}
 
-@app.put('/')
-@app.input(File, location='files')
+@app.post('/')
+@app.input(TheFile, location='files')
 @app.output(Message)
-def upload_file(files):
-    f = files['file']
-    filename = secure_filename(f.filename)
-    f.save(filename)
-    return {'message': 'File upload successfully'}
+def upload_the_file(files_data):
+    try:
+        f = files_data['file']
+        filename = secure_filename(f.filename)
+
+        lines = 0
+        words = 0
+        chars = 0
+        for line in f.readlines():
+            words += len(line.split())
+            lines += 1
+            for c in line:
+                if c != ' ' and c != '\n':
+                    chars += 1
+
+
+        information = Information(nombrearchivo=filename, cantlineas=lines, 
+                                  cantpalabras=words, cantcaracteres=chars,
+                                  fecharegistro=datetime.now())
+        db.session.add(information)
+        db.session.commit()
+        return {'message': 'File upload successfully'}
+    except Exception as ex:
+        abort(500, str(ex))
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
