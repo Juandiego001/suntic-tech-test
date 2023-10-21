@@ -49,7 +49,6 @@ migrate: Migrate = Migrate(app, db)
 @app.get('/')
 @app.output(Files)
 def get_files_info():
-    print('LLEGO AQUI')
     return {'items': [FileOut().dump(info) for info in Information.query.all()]}
 
 @app.post('/')

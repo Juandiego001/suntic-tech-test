@@ -1,6 +1,9 @@
 # Ejercicio 2
 
 ## Requerimientos
+- Versión de Python > 10.8.
+- Versión de pip > 21.
+- Versión de node > 16.
 
 Se sugiere crear un entorno virtual de python dentro de la carpeta _backend/_ e instalar los paquetes que se encuentran en el archivo de *requirements.txt*. Para esto realizar lo siguiente:
 
@@ -44,6 +47,23 @@ flask --app programa1 db migrate -m "Initial migration..."
 flask --app programa1 db upgrade
 ```
 ## Para ejecutar el backend
+Una vez se ha realizado todo lo anterior se puede proceder a ejecutar el backend:
 ```console
 python programa1.py
 ```
+
+## Para ejecutar el frontend
+- Se debe tener instalado node en las últimas versiones (realizado con 16.17.0).
+
+Ejecutar los comandos:
+```console
+npm i
+npm run dev
+```
+
+Se desplegará el frontend en **localhost:3000** y se comunica con el backend
+**sí o sí** en localhost:5000. En caso de cambiar el puerto, se deberá cambiar
+el código del frontend dentro de los métodos.
+
+## Evidencia de funcionamiento
+![Evidencia de funcionamiento](./evidencia.png "Evidencia de funcionamiento")
