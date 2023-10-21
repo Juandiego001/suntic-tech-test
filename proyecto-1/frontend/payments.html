@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagos | Proyecto 1</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <!-- MDI -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/css/materialdesignicons.min.css">
+</head>
+
+<body>
+  <div class="container">
+    <header class="d-flex justify-content-center py-3">
+      <ul class="nav nav-pills">
+        <li class="nav-item"><a href="index.html" class="nav-link" aria-current="page">Home</a></li>
+        <li class="nav-item"><a href="clients.html" class="nav-link">Clientes</a></li>
+        <li class="nav-item"><a href="contracts.html" class="nav-link">Contratos</a></li>
+        <li class="nav-item"><a href="payments.html" class="nav-link active">Pagos</a></li>
+      </ul>
+    </header>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-end 
+      px-5 py-3 mt-5 text-center">
+    <h1 class="display-5 fw-bold text-body-emphasis">Gestión de pagos</h1>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreate">
+      Crear pago
+    </button>
+  </div>
+
+  <div class="table-responsive small mx-5">
+    <table class="table table-striped table-md">
+      <thead>
+        <tr class="text-center">
+          <th scope="col">Id</th>
+          <th scope="col">Código de contrato</th>
+          <th scope="col">Valor pagado</th>
+          <th scope="col">Fecha y hora de realización</th>
+          <th scope="col">Opciones</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+        <tr class="text-center align-middle">
+          <td>1,001</td>
+          <td>random</td>
+          <td>data</td>
+          <td>juandiego14012003@gmail.com</td>
+          <td>
+            <button class="btn btn-success">
+              <span class="mdi mdi-pencil"></span>
+            </button>
+          </td>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="modal fade p-4 py-md-5" id="modalCreate" aria-labelledby="modalCreate" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-header border-bottom-0">
+          <h1 class="modal-title fs-5">Crear pago</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body py-0">
+          <form class="needs-validation" novalidate>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <label for="contractCode" class="form-label">Código de contrato</label>
+                <input type="text" class="form-control" id="contractCode" placeholder="" required>
+                <div class="invalid-feedback">
+                  El código de contrato es requerido.
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="amount" class="form-label">Valor</label>
+                <input type="text" class="form-control" id="amount" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  El valor es requerido.
+                </div>
+              </div>
+
+
+              <div class="col-sm-12">
+                <label for="createdAt" class="form-label">Fecha de pago</label>
+                <input type="date" class="form-control" id="createdAt" placeholder="" value="" required>
+                <div class="invalid-feedback">
+                  La fecha de pago es requerida.
+                </div>
+              </div>
+
+              <div class="text-end col-12 pb-3">
+                <button class="btn btn-primary" type="submit">Guardar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MDI -->
+  <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/scripts/verify.min.js"></script>
+  <!-- Bootstrap validator -->
+  <script src="./js/validator.js"></script>
+  <!-- Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
