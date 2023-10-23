@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/css/materialdesignicons.min.css">
 </head>
 
-<body>
+<body onload="getData()">
   <div class="container">
     <header class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
@@ -46,35 +46,24 @@
         </tr>
       </thead>
       <tbody id="tbody">
-        <tr class="text-center align-middle">
-          <td>1,001</td>
-          <td>random</td>
-          <td>data</td>
-          <td>placeholder</td>
-          <td>text</td>
-          <td>juandiego14012003@gmail.com</td>
-          <td>
-            <button class="btn btn-success">
-              <span class="mdi mdi-pencil"></span>
-            </button>
-          </td>
       </tbody>
     </table>
   </div>
-
+  
+  <!-- Modal -->
   <div class="modal fade p-4 py-md-5" id="modalCreate" aria-labelledby="modalCreate" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content rounded-4 shadow">
         <div class="modal-header border-bottom-0">
           <h1 class="modal-title fs-5">Crear cliente</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" onclick="hideModal()"></button>
         </div>
         <div class="modal-body py-0">
-          <form class="needs-validation" novalidate>
+          <form id="form" class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="line" class="form-label">Línea</label>
-                <input type="text" class="form-control" id="line" placeholder="" value="" required>
+                <input type="number" class="form-control" id="line" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   La línea es requerida.
                 </div>
@@ -90,7 +79,7 @@
 
               <div class="col-sm-6">
                 <label for="document" class="form-label">Número de documento</label>
-                <input type="text" class="form-control" id="document" placeholder="" value="" required>
+                <input type="number" class="form-control" id="document" placeholder="" value="" required>
                 <div class="invalid-feedback">
                   El número de documento es requerido.
                 </div>
@@ -130,10 +119,25 @@
     </div>
   </div>
 
+  <!-- Toast  -->
+  <div class="toast-container position-absolute bottom-0 start-50 translate-middle-x p-3">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast.js -->
+  <script src="./js/toast.js"></script> 
+  <!-- clients.js -->
+  <script src="./js/clients.js"></script> 
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- MDI -->
   <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/scripts/verify.min.js"></script>
-  <!-- Bootstrap validator -->
-  <script src="./js/validator.js"></script>
   <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

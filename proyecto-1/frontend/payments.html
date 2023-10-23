@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/css/materialdesignicons.min.css">
 </head>
 
-<body>
+<body onload="getData()">
   <div class="container">
     <header class="d-flex justify-content-center py-3">
       <ul class="nav nav-pills">
@@ -40,33 +40,25 @@
           <th scope="col">Código de contrato</th>
           <th scope="col">Valor pagado</th>
           <th scope="col">Fecha y hora de realización</th>
+          <th scope="col">Saldo</th>
           <th scope="col">Opciones</th>
         </tr>
       </thead>
       <tbody id="tbody">
-        <tr class="text-center align-middle">
-          <td>1,001</td>
-          <td>random</td>
-          <td>data</td>
-          <td>juandiego14012003@gmail.com</td>
-          <td>
-            <button class="btn btn-success">
-              <span class="mdi mdi-pencil"></span>
-            </button>
-          </td>
       </tbody>
     </table>
   </div>
 
+  <!-- Modal -->
   <div class="modal fade p-4 py-md-5" id="modalCreate" aria-labelledby="modalCreate" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content rounded-4 shadow">
         <div class="modal-header border-bottom-0">
           <h1 class="modal-title fs-5">Crear pago</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" aria-label="Close" onclick="hideModal()"></button>
         </div>
         <div class="modal-body py-0">
-          <form class="needs-validation" novalidate>
+          <form id="form" class="needs-validation" novalidate>
             <div class="row g-3">
               <div class="col-sm-6">
                 <label for="contractCode" class="form-label">Código de contrato</label>
@@ -103,10 +95,25 @@
     </div>
   </div>
 
+  <!-- Toast  -->
+  <div class="toast-container position-absolute bottom-0 start-50 translate-middle-x p-3">
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- toast.js -->
+  <script src="./js/toast.js"></script> 
+  <!-- contracts.js -->
+  <script src="./js/payments.js"></script> 
+  <!-- Axios CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- MDI -->
   <script src="https://cdn.jsdelivr.net/npm/@mdi/font@7.3.67/scripts/verify.min.js"></script>
-  <!-- Bootstrap validator -->
-  <script src="./js/validator.js"></script>
   <!-- Bootstrap -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
